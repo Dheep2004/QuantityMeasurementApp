@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.apps.quantitymeasurement.QuantityMeasurementApp.Feet;
+import com.apps.quantitymeasurement.QuantityMeasurementApp.Inches;
 
 public class QuantityMeasurementAppTest {
 
@@ -61,5 +62,37 @@ public class QuantityMeasurementAppTest {
     void testFeetEquality_SameReference() {
         Feet f1 = new Feet(1.0);  //same object should always equal to itself (if (this == obj) return true)
         assertTrue(f1.equals(f1));
+    }
+    @Test
+    void testInchesEquality_SameValue() {
+        Inches i1 = new Inches(1.0);
+        Inches i2 = new Inches(1.0); //ensure true same values ke liye
+        assertTrue(i1.equals(i2));
+    }
+
+    @Test
+    void testInchesEquality_DifferentValue() {  // different values ke liye false
+        Inches i1 = new Inches(1.0);
+        Inches i2 = new Inches(2.0);
+        assertFalse(i1.equals(i2));
+    }
+
+    @Test
+    void testInchesEquality_NullComparison() {  //koi value nill na ho comparision mai
+        Inches i1 = new Inches(1.0);
+        assertFalse(i1.equals(null));
+    }
+
+    @Test
+    void testInchesEquality_DifferentClass() {
+        Inches i1 = new Inches(1.0);    //return type hi alag hai
+        String str = "1.0";
+        assertFalse(i1.equals(str));
+    }
+
+    @Test
+    void testInchesEquality_SameReference() {
+        Inches i1 = new Inches(1.0);
+        assertTrue(i1.equals(i1));      //agr same object reference ho to true aaye confuse na ho
     }
 }
