@@ -19,10 +19,16 @@ public class Length {
 
         if (this == obj) return true;
 
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null) return false;
+
+        if (this.getClass() != obj.getClass()) return false;
 
         Length other = (Length) obj;
 
-        return Double.compare(this.toBaseUnit(), other.toBaseUnit()) == 0;
+        double thisInFeet = this.unit.toFeet(this.value);
+
+        double otherInFeet = other.unit.toFeet(other.value);
+
+        return Math.abs(thisInFeet - otherInFeet) < 0.0001;
     }
 }
