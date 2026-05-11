@@ -11,7 +11,7 @@ public class Length {
     }
 
     private double toBaseUnit() {
-        return unit.toFeet(value);
+        return value * unit.getConversionFactor();
     }
 
     @Override
@@ -25,10 +25,31 @@ public class Length {
 
         Length other = (Length) obj;
 
-        double thisInFeet = this.unit.toFeet(this.value);
+        double thisInFeet =
+                this.value * this.unit.getConversionFactor();
 
-        double otherInFeet = other.unit.toFeet(other.value);
+        double otherInFeet =
+                other.value * other.unit.getConversionFactor();
 
         return Math.abs(thisInFeet - otherInFeet) < 0.0001;
+    }
+    public static double convert(double value,
+                                 LengthUnit source,
+                                 LengthUnit target) {
+
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException("Invalid numeric value");
+        }
+
+        if (source == null || target == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
+        }
+
+        // convert source → feet
+        double valueInFeet =
+                value * source.getConversionFactor();
+
+        // feet → target
+        return valueInFeet / target.getConversionFactor();
     }
 }

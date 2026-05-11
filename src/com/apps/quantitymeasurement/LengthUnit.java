@@ -1,6 +1,5 @@
 package com.apps.quantitymeasurement;
 
-
 public enum LengthUnit {
 
     FEET(1.0),
@@ -14,7 +13,7 @@ public enum LengthUnit {
         this.toFeet = toFeet;
     }
 
-    public double toFeet(double value) {
-        return value * toFeet;
+    public double getConversionFactor() {
+        return toFeet;
     }
 }
