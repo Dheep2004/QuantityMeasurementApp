@@ -1,55 +1,55 @@
 package org.example;
 
 public class QuantityMeasurementApp {
+
+    // ---------------- UC1 + UC2 Legacy Code ----------------
+
+//    public static class Feet {
+//        private final double value;
 //
-//        // Inner class for Feet
-//        public static class Feet {
-//            private final double value;
-//
-//            public Feet(double value) {
-//                this.value = value;
-//            }
-//
-//            @Override
-//            public boolean equals(Object obj) {
-//
-//                if (this == obj) return true;
-//
-//                if (obj == null) return false;
-//
-//                if (this.getClass() != obj.getClass()) return false;
-//
-//                Feet other = (Feet) obj;
-//
-//                return Double.compare(this.value, other.value) == 0;
-//            }
-//        }
-//        public static class Inches{
-//            private final double value;
-//            public Inches(double value) {
-//                this.value = value;
-//            }
-//            @Override
-//            public boolean equals(Object obj){
-//                if(this == obj) return true;
-//                if(obj == null) return false;
-//                if(this.getClass() != obj.getClass()) return false;
-//                Inches other = (Inches) obj;
-//                return Double.compare(this.value, other.value) == 0;
-//            }
+//        public Feet(double value) {
+//            this.value = value;
 //        }
 //
-//        public static void main(String[] args) {
-//            Feet f1 = new Feet(1.0);
-//            Feet f2 = new Feet(1.0);
+//        @Override
+//        public boolean equals(Object obj) {
 //
-//            Inches I1 = new Inches(1.0);
-//            Inches I2 = new Inches(1.0);
+//            if (this == obj) return true;
 //
-//            System.out.println(f1.equals(f2));
-//            System.out.println(I1.equals(I2));
+//            if (obj == null) return false;
+//
+//            if (this.getClass() != obj.getClass()) return false;
+//
+//            Feet other = (Feet) obj;
+//
+//            return Double.compare(this.value, other.value) == 0;
 //        }
-    //Demonstrates equality feature.
+//    }
+//
+//    public static class Inches {
+//
+//        private final double value;
+//
+//        public Inches(double value) {
+//            this.value = value;
+//        }
+//
+//        @Override
+//        public boolean equals(Object obj) {
+//
+//            if (this == obj) return true;
+//
+//            if (obj == null) return false;
+//
+//            if (this.getClass() != obj.getClass()) return false;
+//
+//            Inches other = (Inches) obj;
+//
+//            return Double.compare(this.value, other.value) == 0;
+//        }
+//    }
+
+    // ---------------- UC3 Equality ----------------
 
     public static void demonstrateLengthEquality(
             double value1,
@@ -67,12 +67,12 @@ public class QuantityMeasurementApp {
                         " and " +
                         value2 + " " + unit2 +
                         " are equal: " +
-                        length1.equals(length2));
+                        length1.equals(length2)
+        );
     }
 
-    /**
-     * Demonstrates comparison feature.
-     */
+    // ---------------- UC4 Comparison ----------------
+
     public static void demonstrateLengthComparison(
             double value1,
             LengthUnit unit1,
@@ -88,10 +88,8 @@ public class QuantityMeasurementApp {
         );
     }
 
-    /**
-     * Overloaded Method 1:
-     * Conversion using raw values.
-     */
+    // ---------------- UC5 Conversion ----------------
+
     public static Length demonstrateLengthConversion(
             double value,
             LengthUnit fromUnit,
@@ -110,15 +108,14 @@ public class QuantityMeasurementApp {
                         " to " +
                         convertedLength.getValue() +
                         " " +
-                        convertedLength.getUnit());
+                        convertedLength.getUnit()
+        );
 
         return convertedLength;
     }
 
-    /**
-     * Overloaded Method 2:
-     * Conversion using existing Length object.
-     */
+    // Overloaded conversion method
+
     public static Length demonstrateLengthConversion(
             Length length,
             LengthUnit toUnit
@@ -131,20 +128,91 @@ public class QuantityMeasurementApp {
                 "Converted " +
                         length +
                         " to " +
-                        convertedLength);
+                        convertedLength
+        );
 
         return convertedLength;
     }
 
-    /**
-     * Main method for standalone testing.
-     */
+    // ---------------- UC6 Addition ----------------
+
+    public static Length demonstrateLengthAddition(
+            Length l1,
+            Length l2,
+            LengthUnit targetUnit
+    ) {
+
+        if (l1 == null || l2 == null) {
+            throw new IllegalArgumentException(
+                    "Operands cannot be null"
+            );
+        }
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
+        }
+
+        // Convert operands to inches
+        double first =
+                l1.getValue() *
+                        l1.getUnit().getConversionFactor();
+
+        double second =
+                l2.getValue() *
+                        l2.getUnit().getConversionFactor();
+
+        // Add
+        double total = first + second;
+
+        // Convert to target unit
+        double result =
+                total /
+                        targetUnit.getConversionFactor();
+
+        Length resultLength =
+                new Length(result, targetUnit);
+
+        System.out.println(
+                l1 + " + " + l2 +
+                        " = " + resultLength
+        );
+
+        return resultLength;
+    }
+
+    // Overloaded addition method
+
+    public static Length demonstrateLengthAddition(
+            double value1,
+            LengthUnit unit1,
+            double value2,
+            LengthUnit unit2,
+            LengthUnit targetUnit
+    ) {
+
+        Length l1 =
+                new Length(value1, unit1);
+
+        Length l2 =
+                new Length(value2, unit2);
+
+        return demonstrateLengthAddition(
+                l1,
+                l2,
+                targetUnit
+        );
+    }
+
+
     public static void main(String[] args) {
 
-//        demonstrateFeetEquality();
-//        demonstrateInchesEquality();
 
-        // UC3 Equality Demonstrations
+
+        System.out.println(
+                " UC3 Equality Demonstrations "
+        );
 
         demonstrateLengthEquality(
                 1.0,
@@ -153,7 +221,19 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES
         );
 
-        // UC4 Extended Units
+        demonstrateLengthEquality(
+                1.0,
+                LengthUnit.FEET,
+                1.0,
+                LengthUnit.FEET
+        );
+
+
+        System.out.println(
+                "\n UC4 Extended Unit Demonstrations "
+        );
+
+        // Yard and Feet equality
         demonstrateLengthEquality(
                 1.0,
                 LengthUnit.YARDS,
@@ -161,6 +241,7 @@ public class QuantityMeasurementApp {
                 LengthUnit.FEET
         );
 
+        // Yard and Inches equality
         demonstrateLengthEquality(
                 1.0,
                 LengthUnit.YARDS,
@@ -168,18 +249,12 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES
         );
 
+        // Centimeter and Inches equality
         demonstrateLengthEquality(
-                1.0,
+                2.54,
                 LengthUnit.CENTIMETERS,
-                0.393701,
+                1.0,
                 LengthUnit.INCHES
-        );
-
-        demonstrateLengthEquality(
-                30.48,
-                LengthUnit.CENTIMETERS,
-                1.0,
-                LengthUnit.FEET
         );
 
         // Comparison demonstrations
@@ -190,47 +265,47 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES
         );
 
-        demonstrateLengthComparison(
-                1.0,
-                LengthUnit.YARDS,
-                3.0,
-                LengthUnit.FEET
+
+        System.out.println(
+                "\nUC5 Conversion Demonstrations"
         );
 
-        // UC5 Conversion demonstrations
-
+        // Feet → Inches
         demonstrateLengthConversion(
                 1.0,
                 LengthUnit.FEET,
                 LengthUnit.INCHES
         );
 
+        // Inches → Feet
         demonstrateLengthConversion(
                 24.0,
                 LengthUnit.INCHES,
                 LengthUnit.FEET
         );
 
+        // Yard → Inches
         demonstrateLengthConversion(
                 1.0,
                 LengthUnit.YARDS,
                 LengthUnit.INCHES
         );
 
+        // Inches → Yard
         demonstrateLengthConversion(
                 72.0,
                 LengthUnit.INCHES,
                 LengthUnit.YARDS
         );
 
+        // Centimeters → Inches
         demonstrateLengthConversion(
                 2.54,
                 LengthUnit.CENTIMETERS,
                 LengthUnit.INCHES
         );
 
-        // Overloaded method demonstration
-
+        // Overloaded conversion method
         Length yard =
                 new Length(2.0, LengthUnit.YARDS);
 
@@ -238,8 +313,70 @@ public class QuantityMeasurementApp {
                 yard,
                 LengthUnit.INCHES
         );
+
+
+
+        System.out.println(
+                "\nUC6 Addition Demonstration "
+        );
+
+        // Test Case 1
+        System.out.println("\nTest 1: Feet + Feet");
+
+        demonstrateLengthAddition(
+                1.0,
+                LengthUnit.FEET,
+                2.0,
+                LengthUnit.FEET,
+                LengthUnit.FEET
+        );
+
+        // Test Case 2
+        System.out.println("\nTest 2: Feet + Inches");
+
+        demonstrateLengthAddition(
+                1.0,
+                LengthUnit.FEET,
+                12.0,
+                LengthUnit.INCHES,
+                LengthUnit.FEET
+        );
+
+        // Test Case 3
+        System.out.println("\nTest 3: Inches + Feet");
+
+        demonstrateLengthAddition(
+                12.0,
+                LengthUnit.INCHES,
+                1.0,
+                LengthUnit.FEET,
+                LengthUnit.INCHES
+        );
+
+        // Test Case 4
+        System.out.println("\nTest 4: Yard + Feet");
+
+        demonstrateLengthAddition(
+                1.0,
+                LengthUnit.YARDS,
+                3.0,
+                LengthUnit.FEET,
+                LengthUnit.YARDS
+        );
+
+        // Test Case 5
+        System.out.println("\nTest 5: Centimeters + Inches");
+
+        demonstrateLengthAddition(
+                2.54,
+                LengthUnit.CENTIMETERS,
+                1.0,
+                LengthUnit.INCHES,
+                LengthUnit.CENTIMETERS
+        );
+
+        System.out.println(
+                "\n----------- ALL UC TESTS EXECUTED SUCCESSFULLY -----------"
+        );
     }
 }
-
-
-//

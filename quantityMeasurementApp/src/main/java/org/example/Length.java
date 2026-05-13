@@ -113,4 +113,32 @@ public class Length {
     public String toString() {
         return value + " " + unit;
     }
+    /**
+     * Adds another Length object.
+     * Result unit = current object's unit.
+     */
+    public Length add(Length other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException(
+                    "Second operand cannot be null"
+            );
+        }
+
+        // Convert both to inches
+        double thisInches = this.toInches();
+
+        double otherInches = other.toInches();
+
+        // Add
+        double totalInches =
+                thisInches + otherInches;
+
+        // Convert back to current unit
+        double resultValue =
+                totalInches /
+                        unit.getConversionFactor();
+
+        return new Length(resultValue, this.unit);
+    }
 }
