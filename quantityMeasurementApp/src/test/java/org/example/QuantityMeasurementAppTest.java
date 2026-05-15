@@ -560,4 +560,154 @@ public class QuantityMeasurementAppTest {
 
         assertEquals(0.003, result.getValue(), 0.0001);
     }
+    @Test
+    void testAddition_ExplicitTargetUnit_Feet() {
+
+        Length result = Length.add(
+                new Length(1.0, LengthUnit.FEET),
+                new Length(12.0, LengthUnit.INCHES),
+                LengthUnit.FEET
+        );
+
+        assertEquals(2.0, result.getValue(), 0.0001);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_Inches() {
+
+        Length result = Length.add(
+                new Length(1.0, LengthUnit.FEET),
+                new Length(12.0, LengthUnit.INCHES),
+                LengthUnit.INCHES
+        );
+
+        assertEquals(24.0, result.getValue(), 0.0001);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_Yards() {
+
+        Length result = Length.add(
+                new Length(1.0, LengthUnit.FEET),
+                new Length(12.0, LengthUnit.INCHES),
+                LengthUnit.YARDS
+        );
+
+        assertEquals(0.6667, result.getValue(), 0.01);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_Centimeters() {
+
+        Length result = Length.add(
+                new Length(1.0, LengthUnit.INCHES),
+                new Length(1.0, LengthUnit.INCHES),
+                LengthUnit.CENTIMETERS
+        );
+
+        assertEquals(5.08, result.getValue(), 0.01);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_SameAsFirstOperand() {
+
+        Length result = Length.add(
+                new Length(2.0, LengthUnit.YARDS),
+                new Length(3.0, LengthUnit.FEET),
+                LengthUnit.YARDS
+        );
+
+        assertEquals(3.0, result.getValue(), 0.0001);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_SameAsSecondOperand() {
+
+        Length result = Length.add(
+                new Length(2.0, LengthUnit.YARDS),
+                new Length(3.0, LengthUnit.FEET),
+                LengthUnit.FEET
+        );
+
+        assertEquals(9.0, result.getValue(), 0.0001);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_Commutativity() {
+
+        Length result1 = Length.add(
+                new Length(1.0, LengthUnit.FEET),
+                new Length(12.0, LengthUnit.INCHES),
+                LengthUnit.YARDS
+        );
+
+        Length result2 = Length.add(
+                new Length(12.0, LengthUnit.INCHES),
+                new Length(1.0, LengthUnit.FEET),
+                LengthUnit.YARDS
+        );
+
+        assertTrue(result1.equals(result2));
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_WithZero() {
+
+        Length result = Length.add(
+                new Length(5.0, LengthUnit.FEET),
+                new Length(0.0, LengthUnit.INCHES),
+                LengthUnit.YARDS
+        );
+
+        assertEquals(1.6667, result.getValue(), 0.01);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_NegativeValues() {
+
+        Length result = Length.add(
+                new Length(5.0, LengthUnit.FEET),
+                new Length(-2.0, LengthUnit.FEET),
+                LengthUnit.INCHES
+        );
+
+        assertEquals(36.0, result.getValue(), 0.0001);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_NullTargetUnit() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> Length.add(
+                        new Length(1.0, LengthUnit.FEET),
+                        new Length(12.0, LengthUnit.INCHES),
+                        null
+                )
+        );
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_LargeToSmallScale() {
+
+        Length result = Length.add(
+                new Length(1000.0, LengthUnit.FEET),
+                new Length(500.0, LengthUnit.FEET),
+                LengthUnit.INCHES
+        );
+
+        assertEquals(18000.0, result.getValue(), 0.0001);
+    }
+    @Test
+    void testAddition_ExplicitTargetUnit_SmallToLargeScale() {
+
+        Length result = Length.add(
+                new Length(12.0, LengthUnit.INCHES),
+                new Length(12.0, LengthUnit.INCHES),
+                LengthUnit.YARDS
+        );
+
+        assertEquals(0.6667, result.getValue(), 0.01);
+    }
+
 }

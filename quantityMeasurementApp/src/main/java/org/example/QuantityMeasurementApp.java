@@ -378,5 +378,47 @@ public class QuantityMeasurementApp {
         System.out.println(
                 "\n----------- ALL UC TESTS EXECUTED SUCCESSFULLY -----------"
         );
+      //uc7
+
+// FEET target
+
+        demonstrateLengthAddition(
+                1.0,
+                LengthUnit.FEET,
+                12.0,
+                LengthUnit.INCHES,
+                LengthUnit.FEET
+        );
+
+// INCHES target
+
+        demonstrateLengthAddition(
+                1.0,
+                LengthUnit.FEET,
+                12.0,
+                LengthUnit.INCHES,
+                LengthUnit.INCHES
+        );
+        // YARDS target
+
+        demonstrateLengthAddition(
+                1.0,
+                LengthUnit.FEET,
+                12.0,
+                LengthUnit.INCHES,
+                LengthUnit.YARDS
+        );
+
+// CENTIMETERS target
+
+        demonstrateLengthAddition(
+                1.0,
+                LengthUnit.INCHES,
+                1.0,
+                LengthUnit.INCHES,
+                LengthUnit.CENTIMETERS
+        );
+
+
     }
 }
