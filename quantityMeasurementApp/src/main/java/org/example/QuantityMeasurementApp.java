@@ -421,4 +421,27 @@ public class QuantityMeasurementApp {
 
 
     }
+    // ---------------- UC8 Base Unit Demonstration ----------------
+
+    public static void demonstrateBaseUnitConversion() {
+
+        System.out.println(
+                "\n----------- UC8 Base Unit Conversion -----------"
+        );
+
+        System.out.println(
+                "12 Inches to Feet = " +
+                        LengthUnit.INCHES.convertToBaseUnit(12.0)
+        );
+
+        System.out.println(
+                "1 Yard to Feet = " +
+                        LengthUnit.YARDS.convertToBaseUnit(1.0)
+        );
+
+        System.out.println(
+                "30.48 CM to Feet = " +
+                        LengthUnit.CENTIMETERS.convertToBaseUnit(30.48)
+        );
+    }
 }

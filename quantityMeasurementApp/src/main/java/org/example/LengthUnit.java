@@ -23,4 +23,29 @@ public enum LengthUnit {
     public double getConversionFactor() {
         return conversionFactor;
     }
+    // Convert current unit → base unit (feet)
+
+    public double convertToBaseUnit(double value) {
+
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException(
+                    "Invalid numeric value"
+            );
+        }
+
+        return value * conversionFactor;
+    }
+
+    // Convert base unit (feet) → target unit
+
+    public double convertFromBaseUnit(double baseValue) {
+
+        if (!Double.isFinite(baseValue)) {
+            throw new IllegalArgumentException(
+                    "Invalid numeric value"
+            );
+        }
+
+        return baseValue / conversionFactor;
+    }
 }

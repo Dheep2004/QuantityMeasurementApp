@@ -13,57 +13,126 @@ package org.example;
 public class Length {
 
     private final double value;
+
     private final LengthUnit unit;
 
     // Constructor
+
     public Length(double value, LengthUnit unit) {
 
         if (unit == null) {
-            throw new IllegalArgumentException("Unit cannot be null");
+
+            throw new IllegalArgumentException(
+                    "Unit cannot be null"
+            );
         }
 
         if (!Double.isFinite(value)) {
-            throw new IllegalArgumentException("Invalid numeric value");
+
+            throw new IllegalArgumentException(
+                    "Invalid numeric value"
+            );
         }
 
         this.value = value;
+
         this.unit = unit;
     }
 
     /**
-     * Converts current value to base unit (inches).
+     * UC5 OLD LOGIC
+     * Converts current value to inches.
      */
-    private double toInches() {
-        return value * unit.getConversionFactor();
+
+//    private double toInches() {
+//        return value * unit.getConversionFactor();
+//    }
+
+    /**
+     * UC8 REFACTORED LOGIC
+     * Converts current value to base unit (feet)
+     * using LengthUnit responsibility.
+     */
+
+    private double toBaseUnit() {
+
+        return unit.convertToBaseUnit(value);
     }
 
     /**
      * Overridden equals method for value-based comparison.
      */
+
     @Override
     public boolean equals(Object obj) {
 
         if (this == obj) return true;
 
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null ||
+                getClass() != obj.getClass()) {
+            return false;
+        }
 
         Length other = (Length) obj;
 
+        // OLD UC5 LOGIC
+
+//        return Math.abs(
+//                this.toInches() -
+//                        other.toInches()
+//        ) < 0.0001;
+
+        // UC8 REFACTORED LOGIC
+
         return Math.abs(
-                this.toInches() -
-                        other.toInches()
-        ) < 0.0001;
+                this.toBaseUnit() -
+                        other.toBaseUnit()
+        ) < 0.01;
     }
 
-    // Best practice extension
-    // @Override
-    // public int hashCode() {
-    //     return Objects.hash(toInches());
-    // }
+    // Optional Best Practice
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(toBaseUnit());
+//    }
 
     /**
      * Static conversion API.
      */
+
+//    public static double convert(
+//            double value,
+//            LengthUnit source,
+//            LengthUnit target
+//    ) {
+//
+//        if (source == null || target == null) {
+//            throw new IllegalArgumentException(
+//                    "Units cannot be null"
+//            );
+//        }
+//
+//        if (!Double.isFinite(value)) {
+//            throw new IllegalArgumentException(
+//                    "Invalid numeric value"
+//            );
+//        }
+//
+//        // source → inches
+//
+//        double inches =
+//                value * source.getConversionFactor();
+//
+//        // inches → target
+//
+//        return inches / target.getConversionFactor();
+//    }
+
+    /**
+     * UC8 Refactored conversion logic.
+     */
+
     public static double convert(
             double value,
             LengthUnit source,
@@ -71,35 +140,84 @@ public class Length {
     ) {
 
         if (source == null || target == null) {
-            throw new IllegalArgumentException("Units cannot be null");
+
+            throw new IllegalArgumentException(
+                    "Units cannot be null"
+            );
         }
+
         if (!Double.isFinite(value)) {
-            throw new IllegalArgumentException("Invalid numeric value");
+
+            throw new IllegalArgumentException(
+                    "Invalid numeric value"
+            );
         }
 
-        // source → inches
-        double inches =
-                value * source.getConversionFactor();
+        // source → base unit
 
-        // inches → target
-        return inches / target.getConversionFactor();
+        double baseValue =
+                source.convertToBaseUnit(value);
+
+        // base unit → target
+
+        return target.convertFromBaseUnit(baseValue);
     }
 
     /**
      * Instance conversion method.
      * Returns NEW immutable Length object.
      */
+
+    // OLD UC5 LOGIC
+
+//    public Length convertTo(LengthUnit targetUnit) {
+//
+//        if (targetUnit == null) {
+//            throw new IllegalArgumentException(
+//                    "Units cannot be null"
+//            );
+//        }
+//
+//        double convertedValue =
+//                convert(
+//                        this.value,
+//                        this.unit,
+//                        targetUnit
+//                );
+//
+//        return new Length(
+//                convertedValue,
+//                targetUnit
+//        );
+//    }
+
+    /**
+     * UC8 Refactored conversion method.
+     */
+
     public Length convertTo(LengthUnit targetUnit) {
+
         if (targetUnit == null) {
-            throw new IllegalArgumentException("Units cannot be null");
+
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
         }
 
-        double convertedValue =
-                convert(this.value,
-                        this.unit,
-                        targetUnit);
+        // Convert source → base unit
 
-        return new Length(convertedValue, targetUnit);
+        double baseValue =
+                unit.convertToBaseUnit(value);
+
+        // Convert base → target unit
+
+        double convertedValue =
+                targetUnit.convertFromBaseUnit(baseValue);
+
+        return new Length(
+                convertedValue,
+                targetUnit
+        );
     }
 
     public double getValue() {
@@ -109,38 +227,52 @@ public class Length {
     public LengthUnit getUnit() {
         return unit;
     }
+
     @Override
     public String toString() {
+
         return value + " " + unit;
     }
+
     /**
-     * Adds another Length object.
-     * Result unit = current object's unit.
+     * UC6 OLD ADDITION LOGIC
      */
+
 //    public Length add(Length other) {
 //
 //        if (other == null) {
+//
 //            throw new IllegalArgumentException(
 //                    "Second operand cannot be null"
 //            );
 //        }
 //
 //        // Convert both to inches
+//
 //        double thisInches = this.toInches();
 //
 //        double otherInches = other.toInches();
 //
 //        // Add
+//
 //        double totalInches =
-//                thisInches + otherInches;
+//                thisInches + otherInches();
 //
 //        // Convert back to current unit
+//
 //        double resultValue =
 //                totalInches /
 //                        unit.getConversionFactor();
 //
-//        return new Length(resultValue, this.unit);
+//        return new Length(
+//                resultValue,
+//                this.unit
+//        );
 //    }
+
+    /**
+     * UC8 Refactored internal addition logic.
+     */
 
     private static Length addInternal(
             Length l1,
@@ -148,54 +280,84 @@ public class Length {
             LengthUnit targetUnit
     ) {
 
-        double first = l1.toInches();
+        // Convert both → base unit
 
-        double second = l2.toInches();
+        double first =
+                l1.unit.convertToBaseUnit(l1.value);
+
+        double second =
+                l2.unit.convertToBaseUnit(l2.value);
+
+        // Add
 
         double total = first + second;
 
-        double result =
-                total / targetUnit.getConversionFactor();
+        // Convert result → target unit
 
-        return new Length(result, targetUnit);
+        double result =
+                targetUnit.convertFromBaseUnit(total);
+
+        return new Length(
+                result,
+                targetUnit
+        );
     }
+
+    /**
+     * UC6 Addition
+     * Result in current object's unit.
+     */
+
     public Length add(Length other) {
 
         if (other == null) {
+
             throw new IllegalArgumentException(
                     "Second operand cannot be null"
             );
         }
 
-        return addInternal(this, other, this.unit);
+        return addInternal(
+                this,
+                other,
+                this.unit
+        );
     }
 
     /**
      * UC7 Addition with explicit target unit.
      */
+
     public Length add(
             Length other,
             LengthUnit targetUnit
     ) {
 
         if (other == null) {
+
             throw new IllegalArgumentException(
                     "Second operand cannot be null"
             );
         }
 
         if (targetUnit == null) {
+
             throw new IllegalArgumentException(
                     "Target unit cannot be null"
             );
         }
 
-        return addInternal(this, other, targetUnit);
+        return addInternal(
+                this,
+                other,
+                targetUnit
+        );
     }
 
     /**
      * Static overloaded add method.
      */
+
     public static Length add(
             Length l1,
             Length l2,
@@ -203,23 +365,30 @@ public class Length {
     ) {
 
         if (l1 == null || l2 == null) {
+
             throw new IllegalArgumentException(
                     "Operands cannot be null"
             );
         }
 
         if (targetUnit == null) {
+
             throw new IllegalArgumentException(
                     "Target unit cannot be null"
             );
         }
 
-        return addInternal(l1, l2, targetUnit);
+        return addInternal(
+                l1,
+                l2,
+                targetUnit
+        );
     }
 
     /**
      * Overloaded add method using raw values.
      */
+
     public static Length add(
             double value1,
             LengthUnit unit1,
@@ -228,11 +397,16 @@ public class Length {
             LengthUnit targetUnit
     ) {
 
-        Length l1 = new Length(value1, unit1);
-        Length l2 = new Length(value2, unit2);
+        Length l1 =
+                new Length(value1, unit1);
 
-        return add(l1, l2, targetUnit);
+        Length l2 =
+                new Length(value2, unit2);
 
+        return add(
+                l1,
+                l2,
+                targetUnit
+        );
     }
-
 }
