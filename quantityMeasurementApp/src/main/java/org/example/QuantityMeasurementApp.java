@@ -418,6 +418,41 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES,
                 LengthUnit.CENTIMETERS
         );
+        System.out.println(
+                "\n=========== UC9 WEIGHT DEMONSTRATION ==========="
+        );
+
+// Equality
+        demonstrateWeightEquality(
+                1.0,
+                WeightUnit.KILOGRAM,
+                1000.0,
+                WeightUnit.GRAM
+        );
+
+// Conversion
+        demonstrateWeightConversion(
+                1.0,
+                WeightUnit.KILOGRAM,
+                WeightUnit.POUND
+        );
+
+// Addition
+        demonstrateWeightAddition(
+                1.0,
+                WeightUnit.KILOGRAM,
+                1000.0,
+                WeightUnit.GRAM,
+                WeightUnit.KILOGRAM
+        );
+
+        demonstrateWeightAddition(
+                1.0,
+                WeightUnit.POUND,
+                453.592,
+                WeightUnit.GRAM,
+                WeightUnit.POUND
+        );
 
 
     }
@@ -443,5 +478,80 @@ public class QuantityMeasurementApp {
                 "30.48 CM to Feet = " +
                         LengthUnit.CENTIMETERS.convertToBaseUnit(30.48)
         );
+    }
+    // ---------------- UC9 WEIGHT EQUALITY ----------------
+
+    public static void demonstrateWeightEquality(
+            double value1,
+            WeightUnit unit1,
+            double value2,
+            WeightUnit unit2
+    ) {
+
+        Weight w1 =
+                new Weight(value1, unit1);
+
+        Weight w2 =
+                new Weight(value2, unit2);
+
+        System.out.println(
+                w1 + " and " +
+                        w2 +
+                        " are equal : " +
+                        w1.equals(w2)
+        );
+    }
+
+// ---------------- UC9 WEIGHT CONVERSION ----------------
+
+    public static Weight demonstrateWeightConversion(
+            double value,
+            WeightUnit fromUnit,
+            WeightUnit toUnit
+    ) {
+
+        Weight original =
+                new Weight(value, fromUnit);
+
+        Weight converted =
+                original.convertTo(toUnit);
+
+        System.out.println(
+                "Converted " +
+                        original +
+                        " to " +
+                        converted
+        );
+
+        return converted;
+    }
+
+// ---------------- UC9 WEIGHT ADDITION ----------------
+
+    public static Weight demonstrateWeightAddition(
+            double value1,
+            WeightUnit unit1,
+            double value2,
+            WeightUnit unit2,
+            WeightUnit targetUnit
+    ) {
+
+        Weight w1 =
+                new Weight(value1, unit1);
+
+        Weight w2 =
+                new Weight(value2, unit2);
+
+        Weight result =
+                w1.add(w2, targetUnit);
+
+        System.out.println(
+                w1 + " + " +
+                        w2 +
+                        " = " +
+                        result
+        );
+
+        return result;
     }
 }
