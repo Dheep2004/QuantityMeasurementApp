@@ -4,7 +4,7 @@ package org.example;
  * Enum representing supported length units
  * along with their conversion factors relative to feet.
  */
-public enum LengthUnit {
+public enum LengthUnit implements IMeasurable {
 
     FEET(1.0),
     INCHES(1.0 / 12.0),
@@ -47,5 +47,10 @@ public enum LengthUnit {
         }
 
         return baseValue / conversionFactor;
+    }
+    @Override
+    public String getUnitName() {
+
+        return this.name();
     }
 }

@@ -58,9 +58,11 @@ public class QuantityMeasurementApp {
             LengthUnit unit2
     ) {
 
-        Length length1 = new Length(value1, unit1);
+        Length length1 =
+                new Length(value1, unit1);
 
-        Length length2 = new Length(value2, unit2);
+        Length length2 =
+                new Length(value2, unit2);
 
         System.out.println(
                 value1 + " " + unit1 +
@@ -143,18 +145,19 @@ public class QuantityMeasurementApp {
     ) {
 
         if (l1 == null || l2 == null) {
+
             throw new IllegalArgumentException(
                     "Operands cannot be null"
             );
         }
 
         if (targetUnit == null) {
+
             throw new IllegalArgumentException(
                     "Target unit cannot be null"
             );
         }
 
-        // Convert operands to inches
         double first =
                 l1.getValue() *
                         l1.getUnit().getConversionFactor();
@@ -163,10 +166,8 @@ public class QuantityMeasurementApp {
                 l2.getValue() *
                         l2.getUnit().getConversionFactor();
 
-        // Add
         double total = first + second;
 
-        // Convert to target unit
         double result =
                 total /
                         targetUnit.getConversionFactor();
@@ -205,10 +206,9 @@ public class QuantityMeasurementApp {
         );
     }
 
+    // ---------------- MAIN METHOD ----------------
 
     public static void main(String[] args) {
-
-
 
         System.out.println(
                 " UC3 Equality Demonstrations "
@@ -228,12 +228,10 @@ public class QuantityMeasurementApp {
                 LengthUnit.FEET
         );
 
-
         System.out.println(
                 "\n UC4 Extended Unit Demonstrations "
         );
 
-        // Yard and Feet equality
         demonstrateLengthEquality(
                 1.0,
                 LengthUnit.YARDS,
@@ -241,7 +239,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.FEET
         );
 
-        // Yard and Inches equality
         demonstrateLengthEquality(
                 1.0,
                 LengthUnit.YARDS,
@@ -249,7 +246,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES
         );
 
-        // Centimeter and Inches equality
         demonstrateLengthEquality(
                 2.54,
                 LengthUnit.CENTIMETERS,
@@ -257,7 +253,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES
         );
 
-        // Comparison demonstrations
         demonstrateLengthComparison(
                 1.0,
                 LengthUnit.FEET,
@@ -265,47 +260,40 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES
         );
 
-
         System.out.println(
                 "\nUC5 Conversion Demonstrations"
         );
 
-        // Feet → Inches
         demonstrateLengthConversion(
                 1.0,
                 LengthUnit.FEET,
                 LengthUnit.INCHES
         );
 
-        // Inches → Feet
         demonstrateLengthConversion(
                 24.0,
                 LengthUnit.INCHES,
                 LengthUnit.FEET
         );
 
-        // Yard → Inches
         demonstrateLengthConversion(
                 1.0,
                 LengthUnit.YARDS,
                 LengthUnit.INCHES
         );
 
-        // Inches → Yard
         demonstrateLengthConversion(
                 72.0,
                 LengthUnit.INCHES,
                 LengthUnit.YARDS
         );
 
-        // Centimeters → Inches
         demonstrateLengthConversion(
                 2.54,
                 LengthUnit.CENTIMETERS,
                 LengthUnit.INCHES
         );
 
-        // Overloaded conversion method
         Length yard =
                 new Length(2.0, LengthUnit.YARDS);
 
@@ -314,14 +302,9 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES
         );
 
-
-
         System.out.println(
                 "\nUC6 Addition Demonstration "
         );
-
-        // Test Case 1
-        System.out.println("\nTest 1: Feet + Feet");
 
         demonstrateLengthAddition(
                 1.0,
@@ -331,9 +314,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.FEET
         );
 
-        // Test Case 2
-        System.out.println("\nTest 2: Feet + Inches");
-
         demonstrateLengthAddition(
                 1.0,
                 LengthUnit.FEET,
@@ -341,9 +321,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES,
                 LengthUnit.FEET
         );
-
-        // Test Case 3
-        System.out.println("\nTest 3: Inches + Feet");
 
         demonstrateLengthAddition(
                 12.0,
@@ -353,9 +330,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES
         );
 
-        // Test Case 4
-        System.out.println("\nTest 4: Yard + Feet");
-
         demonstrateLengthAddition(
                 1.0,
                 LengthUnit.YARDS,
@@ -363,9 +337,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.FEET,
                 LengthUnit.YARDS
         );
-
-        // Test Case 5
-        System.out.println("\nTest 5: Centimeters + Inches");
 
         demonstrateLengthAddition(
                 2.54,
@@ -378,9 +349,8 @@ public class QuantityMeasurementApp {
         System.out.println(
                 "\n----------- ALL UC TESTS EXECUTED SUCCESSFULLY -----------"
         );
-      //uc7
 
-// FEET target
+        // ---------------- UC7 ----------------
 
         demonstrateLengthAddition(
                 1.0,
@@ -390,8 +360,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.FEET
         );
 
-// INCHES target
-
         demonstrateLengthAddition(
                 1.0,
                 LengthUnit.FEET,
@@ -399,7 +367,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES,
                 LengthUnit.INCHES
         );
-        // YARDS target
 
         demonstrateLengthAddition(
                 1.0,
@@ -409,8 +376,6 @@ public class QuantityMeasurementApp {
                 LengthUnit.YARDS
         );
 
-// CENTIMETERS target
-
         demonstrateLengthAddition(
                 1.0,
                 LengthUnit.INCHES,
@@ -418,11 +383,17 @@ public class QuantityMeasurementApp {
                 LengthUnit.INCHES,
                 LengthUnit.CENTIMETERS
         );
+
+        // ---------------- UC8 ----------------
+
+        demonstrateBaseUnitConversion();
+
+        // ---------------- UC9 ----------------
+
         System.out.println(
                 "\n=========== UC9 WEIGHT DEMONSTRATION ==========="
         );
 
-// Equality
         demonstrateWeightEquality(
                 1.0,
                 WeightUnit.KILOGRAM,
@@ -430,14 +401,12 @@ public class QuantityMeasurementApp {
                 WeightUnit.GRAM
         );
 
-// Conversion
         demonstrateWeightConversion(
                 1.0,
                 WeightUnit.KILOGRAM,
                 WeightUnit.POUND
         );
 
-// Addition
         demonstrateWeightAddition(
                 1.0,
                 WeightUnit.KILOGRAM,
@@ -454,8 +423,55 @@ public class QuantityMeasurementApp {
                 WeightUnit.POUND
         );
 
+        // ---------------- UC10 ----------------
 
+        System.out.println(
+                "\n----------- UC10 Generic Quantity Demonstration -----------"
+        );
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(1.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(12.0, LengthUnit.INCHES);
+
+        demonstrateEquality(length1, length2);
+
+        demonstrateConversion(
+                length1,
+                LengthUnit.INCHES
+        );
+
+        demonstrateAddition(
+                length1,
+                length2,
+                LengthUnit.FEET
+        );
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(1.0, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(1000.0, WeightUnit.GRAM);
+
+        demonstrateEquality(weight1, weight2);
+
+        demonstrateConversion(
+                weight1,
+                WeightUnit.GRAM
+        );
+
+        demonstrateAddition(
+                weight1,
+                weight2,
+                WeightUnit.KILOGRAM
+        );
+
+        System.out.println(
+                "\n----------- UC10 Executed Successfully -----------"
+        );
     }
+
     // ---------------- UC8 Base Unit Demonstration ----------------
 
     public static void demonstrateBaseUnitConversion() {
@@ -479,6 +495,7 @@ public class QuantityMeasurementApp {
                         LengthUnit.CENTIMETERS.convertToBaseUnit(30.48)
         );
     }
+
     // ---------------- UC9 WEIGHT EQUALITY ----------------
 
     public static void demonstrateWeightEquality(
@@ -502,7 +519,7 @@ public class QuantityMeasurementApp {
         );
     }
 
-// ---------------- UC9 WEIGHT CONVERSION ----------------
+    // ---------------- UC9 WEIGHT CONVERSION ----------------
 
     public static Weight demonstrateWeightConversion(
             double value,
@@ -526,7 +543,7 @@ public class QuantityMeasurementApp {
         return converted;
     }
 
-// ---------------- UC9 WEIGHT ADDITION ----------------
+    // ---------------- UC9 WEIGHT ADDITION ----------------
 
     public static Weight demonstrateWeightAddition(
             double value1,
@@ -553,5 +570,46 @@ public class QuantityMeasurementApp {
         );
 
         return result;
+    }
+
+    // ---------------- UC10 GENERIC METHODS ----------------
+
+    public static <U extends IMeasurable>
+    void demonstrateEquality(
+            Quantity<U> q1,
+            Quantity<U> q2
+    ) {
+
+        System.out.println(
+                q1 + " equals " +
+                        q2 + " : " +
+                        q1.equals(q2)
+        );
+    }
+
+    public static <U extends IMeasurable>
+    void demonstrateConversion(
+            Quantity<U> quantity,
+            U targetUnit
+    ) {
+
+        System.out.println(
+                quantity + " converted to " +
+                        quantity.convertTo(targetUnit)
+        );
+    }
+
+    public static <U extends IMeasurable>
+    void demonstrateAddition(
+            Quantity<U> q1,
+            Quantity<U> q2,
+            U targetUnit
+    ) {
+
+        System.out.println(
+                q1 + " + " +
+                        q2 + " = " +
+                        q1.add(q2, targetUnit)
+        );
     }
 }
