@@ -1584,4 +1584,148 @@ public class QuantityMeasurementAppTest {
                 q2.hashCode()
         );
     }
+    //equality tests
+    @Test
+    void testEquality_LitreToLitre_SameValue() {
+
+        Quantity<VolumeUnit> q1 =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> q2 =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_LitreToMillilitre_EquivalentValue() {
+
+        Quantity<VolumeUnit> q1 =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> q2 =
+                new Quantity<>(
+                        1000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    void testEquality_GallonToLitre_EquivalentValue() {
+
+        Quantity<VolumeUnit> q1 =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.GALLON
+                );
+
+        Quantity<VolumeUnit> q2 =
+                new Quantity<>(
+                        3.78541,
+                        VolumeUnit.LITRE
+                );
+
+        assertTrue(q1.equals(q2));
+    }
+    //conversion tests
+    @Test
+    void testConversion_LitreToMillilitre() {
+
+        Quantity<VolumeUnit> result =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                ).convertTo(
+                        VolumeUnit.MILLILITRE
+                );
+
+        assertEquals(
+                1000.0,
+                result.getValue(),
+                0.01
+        );
+    }
+
+    @Test
+    void testConversion_GallonToLitre() {
+
+        Quantity<VolumeUnit> result =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.GALLON
+                ).convertTo(
+                        VolumeUnit.LITRE
+                );
+
+        assertEquals(
+                3.78541,
+                result.getValue(),
+                0.01
+        );
+    }
+
+    @Test
+    void testConversion_LitreToGallon() {
+
+        Quantity<VolumeUnit> result =
+                new Quantity<>(
+                        3.78541,
+                        VolumeUnit.LITRE
+                ).convertTo(
+                        VolumeUnit.GALLON
+                );
+
+        assertEquals(
+                1.0,
+                result.getValue(),
+                0.01
+        );
+    }
+    //class category safely
+    @Test
+    void testEquality_VolumeVsLength_Incompatible() {
+
+        Quantity<VolumeUnit> volume =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<LengthUnit> length =
+                new Quantity<>(
+                        1.0,
+                        LengthUnit.FEET
+                );
+
+        assertFalse(volume.equals(length));
+    }
+
+    @Test
+    void testEquality_VolumeVsWeight_Incompatible() {
+
+        Quantity<VolumeUnit> volume =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<WeightUnit> weight =
+                new Quantity<>(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertFalse(volume.equals(weight));
+    }
 }

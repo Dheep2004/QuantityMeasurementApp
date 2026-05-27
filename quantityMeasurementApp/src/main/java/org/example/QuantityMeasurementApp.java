@@ -470,6 +470,66 @@ public class QuantityMeasurementApp {
         System.out.println(
                 "\n----------- UC10 Executed Successfully -----------"
         );
+        // ---------------- UC11 VOLUME DEMONSTRATION ----------------
+
+        System.out.println(
+                "\n=========== UC11 VOLUME DEMONSTRATION ==========="
+        );
+
+// Equality
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        1000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        Quantity<VolumeUnit> volume3 =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.GALLON
+                );
+
+        demonstrateEquality(
+                volume1,
+                volume2
+        );
+
+// Conversion
+
+        demonstrateConversion(
+                volume1,
+                VolumeUnit.MILLILITRE
+        );
+
+        demonstrateConversion(
+                volume3,
+                VolumeUnit.LITRE
+        );
+
+// Addition
+
+        demonstrateAddition(
+                volume1,
+                volume2,
+                VolumeUnit.LITRE
+        );
+
+        demonstrateAddition(
+                volume1,
+                volume3,
+                VolumeUnit.GALLON
+        );
+
+        System.out.println(
+                "\n=========== UC11 EXECUTED SUCCESSFULLY ==========="
+        );
     }
 
     // ---------------- UC8 Base Unit Demonstration ----------------
