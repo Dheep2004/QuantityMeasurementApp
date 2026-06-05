@@ -194,4 +194,67 @@ public class Quantity<U extends IMeasurable> {
         return value + " " +
                 unit.getUnitName();
     }
+    private void validateQuantity(Quantity<U> other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
+        }
+
+        if (this.unit == null || other.unit == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
+        }
+
+        if (!unit.getClass().equals(other.unit.getClass())) {
+            throw new IllegalArgumentException("Cross-category operations are not allowed");
+        }
+
+        if (Double.isNaN(value) || Double.isInfinite(value)
+                || Double.isNaN(other.value) || Double.isInfinite(other.value)) {
+            throw new IllegalArgumentException("Invalid numeric values");
+        }
+    }
+
+    private double roundToTwoDecimals(double value) {
+        return Math.round(value * 100.0) / 100.0;
+    }
+
+    private double toBaseValue() {
+        return unit.convertToBaseUnit(value);
+    }
+    public Quantity<U> subtract(Quantity<U> other) {
+        return subtract(other, this.unit);
+    }
+
+    public Quantity<U> subtract(Quantity<U> other, U targetUnit) {
+
+        validateQuantity(other);
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
+        double thisBase = this.toBaseValue();
+        double otherBase = other.toBaseValue();
+
+        double resultBase = thisBase - otherBase;
+
+        double convertedResult =
+                targetUnit.convertFromBaseUnit(resultBase);
+
+        convertedResult = roundToTwoDecimals(convertedResult);
+
+        return new Quantity<>(convertedResult, targetUnit);
+    }
+    public double divide(Quantity<U> other) {
+
+        validateQuantity(other);
+
+        double thisBase = this.toBaseValue();
+        double otherBase = other.toBaseValue();
+
+        if (otherBase == 0) {
+            throw new ArithmeticException("Division by zero is not allowed");
+        }
+
+        return thisBase / otherBase;
+    }
 }

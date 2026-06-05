@@ -1728,4 +1728,87 @@ public class QuantityMeasurementAppTest {
 
         assertFalse(volume.equals(weight));
     }
+    //uc12
+
+    @Test
+    public void testSubtraction_CrossUnit_FeetMinusInches() {
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> inches =
+                new Quantity<>(6.0, LengthUnit.INCHES);
+
+        Quantity<LengthUnit> result =
+                feet.subtract(inches);
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(9.5, LengthUnit.FEET);
+
+        assertEquals(expected, result);
+    }
+    @Test
+    public void testSubtraction_ResultingInNegative() {
+
+        Quantity<LengthUnit> q1 =
+                new Quantity<>(5.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> q2 =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(-5.0, LengthUnit.FEET);
+
+        assertEquals(expected, q1.subtract(q2));
+    }
+    @Test
+    public void testDivision_SameUnit() {
+
+        Quantity<LengthUnit> q1 =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> q2 =
+                new Quantity<>(2.0, LengthUnit.FEET);
+
+        assertEquals(5.0, q1.divide(q2), 0.01);
+    }
+    @Test
+    public void testDivision_CrossUnit() {
+
+        Quantity<LengthUnit> inches =
+                new Quantity<>(24.0, LengthUnit.INCHES);
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(2.0, LengthUnit.FEET);
+
+        assertEquals(1.0, inches.divide(feet), 0.01);
+    }
+    @Test
+    public void testDivision_ByZero() {
+
+        Quantity<LengthUnit> q1 =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> q2 =
+                new Quantity<>(0.0, LengthUnit.FEET);
+
+        assertThrows(
+                ArithmeticException.class,
+                () -> q1.divide(q2)
+        );
+    }
+    @Test
+    public void testSubtraction_CrossCategory() {
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(5.0, WeightUnit.KILOGRAM);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> feet.subtract((Quantity) kilogram)
+        );
+    }
 }

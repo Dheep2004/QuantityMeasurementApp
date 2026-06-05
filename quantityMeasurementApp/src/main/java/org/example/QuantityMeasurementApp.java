@@ -530,6 +530,11 @@ public class QuantityMeasurementApp {
         System.out.println(
                 "\n=========== UC11 EXECUTED SUCCESSFULLY ==========="
         );
+        demonstrateSubtraction();
+
+        System.out.println("---------------------");
+
+        demonstrateDivision();
     }
 
     // ---------------- UC8 Base Unit Demonstration ----------------
@@ -672,4 +677,135 @@ public class QuantityMeasurementApp {
                         q1.add(q2, targetUnit)
         );
     }
+    public static void demonstrateSubtraction() {
+
+        System.out.println("========== SUBTRACTION OPERATIONS ==========\n");
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> inches =
+                new Quantity<>(6.0, LengthUnit.INCHES);
+
+        Quantity<LengthUnit> result1 = feet.subtract(inches);
+
+        System.out.println(
+                feet.getValue() + " " + feet.getUnit()
+                        + " - "
+                        + inches.getValue() + " " + inches.getUnit()
+                        + " = "
+                        + result1.getValue() + " " + result1.getUnit()
+        );
+
+        Quantity<LengthUnit> result2 =
+                feet.subtract(inches, LengthUnit.INCHES);
+
+        System.out.println(
+                feet.getValue() + " " + feet.getUnit()
+                        + " - "
+                        + inches.getValue() + " " + inches.getUnit()
+                        + " = "
+                        + result2.getValue() + " " + result2.getUnit()
+        );
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(10.0, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(5000.0, WeightUnit.GRAM);
+
+        Quantity<WeightUnit> result3 =
+                kilogram.subtract(gram);
+
+        System.out.println(
+                kilogram.getValue() + " " + kilogram.getUnit()
+                        + " - "
+                        + gram.getValue() + " " + gram.getUnit()
+                        + " = "
+                        + result3.getValue() + " " + result3.getUnit()
+        );
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(5.0, VolumeUnit.LITRE);
+
+        Quantity<VolumeUnit> milliLitre =
+                new Quantity<>(500.0, VolumeUnit.MILLILITRE);
+
+        Quantity<VolumeUnit> result4 =
+                litre.subtract(milliLitre);
+
+        System.out.println(
+                litre.getValue() + " " + litre.getUnit()
+                        + " - "
+                        + milliLitre.getValue() + " " + milliLitre.getUnit()
+                        + " = "
+                        + result4.getValue() + " " + result4.getUnit()
+        );
+    }
+    public static void demonstrateDivision() {
+
+        System.out.println("\n========== DIVISION OPERATIONS ==========\n");
+
+        Quantity<LengthUnit> feet1 =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> feet2 =
+                new Quantity<>(2.0, LengthUnit.FEET);
+
+        double result1 = feet1.divide(feet2);
+
+        System.out.println(
+                feet1.getValue() + " " + feet1.getUnit()
+                        + " ÷ "
+                        + feet2.getValue() + " " + feet2.getUnit()
+                        + " = "
+                        + result1
+        );
+
+        Quantity<LengthUnit> inches =
+                new Quantity<>(24.0, LengthUnit.INCHES);
+
+        double result2 = inches.divide(feet2);
+
+        System.out.println(
+                inches.getValue() + " " + inches.getUnit()
+                        + " ÷ "
+                        + feet2.getValue() + " " + feet2.getUnit()
+                        + " = "
+                        + result2
+        );
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(10.0, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> kilogram2 =
+                new Quantity<>(5.0, WeightUnit.KILOGRAM);
+
+        double result3 = kilogram.divide(kilogram2);
+
+        System.out.println(
+                kilogram.getValue() + " " + kilogram.getUnit()
+                        + " ÷ "
+                        + kilogram2.getValue() + " " + kilogram2.getUnit()
+                        + " = "
+                        + result3
+        );
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(5.0, VolumeUnit.LITRE);
+
+        Quantity<VolumeUnit> litre2 =
+                new Quantity<>(10.0, VolumeUnit.LITRE);
+
+        double result4 = litre.divide(litre2);
+
+        System.out.println(
+                litre.getValue() + " " + litre.getUnit()
+                        + " ÷ "
+                        + litre2.getValue() + " " + litre2.getUnit()
+                        + " = "
+                        + result4
+        );
+    }
+
 }
