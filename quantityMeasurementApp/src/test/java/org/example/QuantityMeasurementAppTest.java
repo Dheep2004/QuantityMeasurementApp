@@ -1811,4 +1811,104 @@ public class QuantityMeasurementAppTest {
                 () -> feet.subtract((Quantity) kilogram)
         );
     }
+    @Test
+    void testArithmeticOperation_Add() {
+
+        assertEquals(
+                15,
+                Quantity.ArithmeticOperation
+                        .ADD
+                        .compute(
+                                10,
+                                5
+                        )
+        );
+    }
+
+    @Test
+    void testArithmeticOperation_Subtract() {
+
+        assertEquals(
+                5,
+                Quantity.ArithmeticOperation
+                        .SUBTRACT
+                        .compute(
+                                10,
+                                5
+                        )
+        );
+    }
+
+    @Test
+    void testArithmeticOperation_Divide() {
+
+        assertEquals(
+                2,
+                Quantity.ArithmeticOperation
+                        .DIVIDE
+                        .compute(
+                                10,
+                                5
+                        )
+        );
+    }
+    @Test
+    void testValidation_NullOperand() {
+
+        Quantity<LengthUnit> q =
+                new Quantity<>(
+                        10,
+                        LengthUnit.FEET
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+
+                () ->
+                        q.add(null)
+        );
+
+        assertThrows(
+                IllegalArgumentException.class,
+
+                () ->
+                        q.subtract(null)
+        );
+
+        assertThrows(
+                IllegalArgumentException.class,
+
+                () ->
+                        q.divide(null)
+        );
+    }
+    @Test
+    void testSubtract_BehaviorPreserved() {
+
+        Quantity<LengthUnit> q1 =
+                new Quantity<>(
+                        10,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> q2 =
+                new Quantity<>(
+                        6,
+                        LengthUnit.INCHES
+                );
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(
+                        9.5,
+                        LengthUnit.FEET
+                );
+
+        assertEquals(
+                expected,
+
+                q1.subtract(
+                        q2
+                )
+        );
+    }
 }
