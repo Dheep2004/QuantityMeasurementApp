@@ -5,7 +5,7 @@ import java.util.function.DoubleBinaryOperator;
 
 public class Quantity<U extends IMeasurable> {
 
-     enum ArithmeticOperation {
+    enum ArithmeticOperation {
 
         ADD((a, b) -> a + b),
 
@@ -14,6 +14,7 @@ public class Quantity<U extends IMeasurable> {
         DIVIDE((a, b) -> {
 
             if (b == 0) {
+
                 throw new ArithmeticException(
                         "Division by zero is not allowed"
                 );
@@ -27,13 +28,16 @@ public class Quantity<U extends IMeasurable> {
         ArithmeticOperation(
                 DoubleBinaryOperator operation
         ) {
-            this.operation = operation;
+
+            this.operation =
+                    operation;
         }
 
         public double compute(
                 double left,
                 double right
         ) {
+
             return operation.applyAsDouble(
                     left,
                     right
@@ -51,34 +55,44 @@ public class Quantity<U extends IMeasurable> {
     ) {
 
         if (unit == null) {
+
             throw new IllegalArgumentException(
                     "Unit cannot be null"
             );
         }
 
         if (!Double.isFinite(value)) {
+
             throw new IllegalArgumentException(
                     "Invalid numeric value"
             );
         }
 
-        this.value = value;
-        this.unit = unit;
+        this.value =
+                value;
+
+        this.unit =
+                unit;
     }
 
     public double getValue() {
+
         return value;
     }
 
     public U getUnit() {
+
         return unit;
     }
 
     private double toBaseUnit() {
-        return unit.convertToBaseUnit(value);
+
+        return unit.convertToBaseUnit(
+                value
+        );
     }
 
-    private double roundToTwoDecimals(
+    private double round(
             double value
     ) {
 
@@ -87,74 +101,80 @@ public class Quantity<U extends IMeasurable> {
         ) / 100.0;
     }
 
-    private void validateArithmeticOperands(
+    // UC14
+
+    private void validateArithmetic(
+            String operation
+    ) {
+
+        unit.validateOperationSupport(
+                operation
+        );
+    }
+
+    private void validateOperands(
+
             Quantity<U> other,
-            U targetUnit,
+
+            U target,
+
             boolean targetRequired
     ) {
 
         if (other == null) {
+
             throw new IllegalArgumentException(
                     "Quantity cannot be null"
             );
         }
 
         if (
-                !unit.getClass()
-                        .equals(
-                                other.unit.getClass()
-                        )
+
+                unit.getClass()
+
+                        !=
+
+                        other.unit.getClass()
         ) {
 
             throw new IllegalArgumentException(
+
                     "Cross-category operations are not allowed"
             );
         }
 
         if (
-                !Double.isFinite(value)
-                        ||
-                        !Double.isFinite(
-                                other.value
-                        )
-        ) {
 
-            throw new IllegalArgumentException(
-                    "Invalid numeric values"
-            );
-        }
-
-        if (
                 targetRequired
+
                         &&
-                        targetUnit == null
+
+                        target == null
         ) {
 
             throw new IllegalArgumentException(
+
                     "Target unit cannot be null"
             );
         }
     }
 
-    private double performBaseArithmetic(
+    private double performArithmetic(
+
             Quantity<U> other,
+
             ArithmeticOperation operation
     ) {
 
-        double thisBase =
-                unit.convertToBaseUnit(
-                        value
-                );
+        double left =
+                this.toBaseUnit();
 
-        double otherBase =
-                other.unit
-                        .convertToBaseUnit(
-                                other.value
-                        );
+        double right =
+                other.toBaseUnit();
 
         return operation.compute(
-                thisBase,
-                otherBase
+                left,
+                right
         );
     }
 
@@ -167,20 +187,29 @@ public class Quantity<U extends IMeasurable> {
             return true;
 
         if (
+
                 obj == null
+
                         ||
+
                         getClass()
-                                != obj.getClass()
+                                !=
+                                obj.getClass()
         ) {
+
             return false;
         }
 
         Quantity<?> other =
+
                 (Quantity<?>) obj;
 
         if (
+
                 unit.getClass()
+
                         !=
+
                         other.unit.getClass()
         ) {
 
@@ -188,9 +217,13 @@ public class Quantity<U extends IMeasurable> {
         }
 
         return Math.abs(
-                toBaseUnit()
+
+                this.toBaseUnit()
+
                         -
+
                         other.toBaseUnit()
+
         ) < 0.01;
     }
 
@@ -198,45 +231,55 @@ public class Quantity<U extends IMeasurable> {
     public int hashCode() {
 
         return Objects.hash(
-                Math.round(
+
+                round(
                         toBaseUnit()
-                                * 100
                 )
         );
     }
+
+    // UC14 Temperature conversion support
 
     public Quantity<U> convertTo(
             U targetUnit
     ) {
 
-        if (
-                targetUnit == null
-        ) {
+        if (targetUnit == null) {
 
             throw new IllegalArgumentException(
                     "Target unit cannot be null"
             );
         }
 
-        double converted =
+        double result;
+
+        result =
+
                 targetUnit
                         .convertFromBaseUnit(
+
                                 toBaseUnit()
                         );
 
         return new Quantity<>(
 
-                roundToTwoDecimals(
-                        converted
+                round(
+                        result
                 ),
 
                 targetUnit
         );
     }
 
+    // ADD
+
     public Quantity<U> add(
             Quantity<U> other
     ) {
+
+        validateArithmetic(
+                "addition"
+        );
 
         return add(
                 other,
@@ -245,41 +288,52 @@ public class Quantity<U extends IMeasurable> {
     }
 
     public Quantity<U> add(
+
             Quantity<U> other,
-            U targetUnit
+
+            U target
     ) {
 
-        validateArithmeticOperands(
+        validateArithmetic(
+                "addition"
+        );
+
+        validateOperands(
                 other,
-                targetUnit,
+                target,
                 true
         );
 
-        double resultBase =
-                performBaseArithmetic(
+        double result =
+
+                performArithmetic(
                         other,
                         ArithmeticOperation.ADD
                 );
 
-        double result =
-                targetUnit
-                        .convertFromBaseUnit(
-                                resultBase
-                        );
-
         return new Quantity<>(
 
-                roundToTwoDecimals(
-                        result
+                round(
+
+                        target
+                                .convertFromBaseUnit(
+                                        result
+                                )
                 ),
 
-                targetUnit
+                target
         );
     }
+
+    // SUBTRACT
 
     public Quantity<U> subtract(
             Quantity<U> other
     ) {
+
+        validateArithmetic(
+                "subtraction"
+        );
 
         return subtract(
                 other,
@@ -288,51 +342,67 @@ public class Quantity<U extends IMeasurable> {
     }
 
     public Quantity<U> subtract(
+
             Quantity<U> other,
-            U targetUnit
+
+            U target
     ) {
 
-        validateArithmeticOperands(
+        validateArithmetic(
+                "subtraction"
+        );
+
+        validateOperands(
                 other,
-                targetUnit,
+                target,
                 true
         );
 
-        double resultBase =
-                performBaseArithmetic(
+        double result =
+
+                performArithmetic(
                         other,
                         ArithmeticOperation.SUBTRACT
                 );
 
-        double result =
-                targetUnit
-                        .convertFromBaseUnit(
-                                resultBase
-                        );
-
         return new Quantity<>(
 
-                roundToTwoDecimals(
-                        result
+                round(
+
+                        target
+                                .convertFromBaseUnit(
+                                        result
+                                )
                 ),
 
-                targetUnit
+                target
         );
     }
+
+    // DIVIDE
 
     public double divide(
             Quantity<U> other
     ) {
 
-        validateArithmeticOperands(
+        validateArithmetic(
+                "division"
+        );
+
+        validateOperands(
                 other,
                 null,
                 false
         );
 
-        return performBaseArithmetic(
-                other,
-                ArithmeticOperation.DIVIDE
+        return round(
+
+                performArithmetic(
+
+                        other,
+
+                        ArithmeticOperation.DIVIDE
+                )
         );
     }
 
@@ -340,7 +410,9 @@ public class Quantity<U extends IMeasurable> {
     public String toString() {
 
         return value
+
                 + " "
+
                 + unit.getUnitName();
     }
 }

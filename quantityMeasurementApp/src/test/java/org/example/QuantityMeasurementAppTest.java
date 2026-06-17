@@ -1911,4 +1911,89 @@ public class QuantityMeasurementAppTest {
                 )
         );
     }
+    @Test
+    void testTemperatureEquality_CelsiusToFahrenheit() {
+
+        Quantity<TemperatureUnit> t1 =
+                new Quantity<>(
+                        0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> t2 =
+                new Quantity<>(
+                        32,
+                        TemperatureUnit.FAHRENHEIT
+                );
+
+        assertTrue(
+                t1.equals(t2)
+        );
+    }
+
+    @Test
+    void testTemperatureConversion() {
+
+        Quantity<TemperatureUnit> result =
+
+                new Quantity<>(
+                        100,
+                        TemperatureUnit.CELSIUS
+                )
+
+                        .convertTo(
+                                TemperatureUnit.FAHRENHEIT
+                        );
+
+        assertEquals(
+                212,
+                result.getValue(),
+                0.01
+        );
+    }
+
+    @Test
+    void testTemperatureAddUnsupported() {
+
+        Quantity<TemperatureUnit> t1 =
+                new Quantity<>(
+                        10,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> t2 =
+                new Quantity<>(
+                        20,
+                        TemperatureUnit.CELSIUS
+                );
+
+        assertThrows(
+
+                UnsupportedOperationException.class,
+
+                () -> t1.add(t2)
+        );
+    }
+
+    @Test
+    void testTemperatureVsLength() {
+
+        Quantity<TemperatureUnit> t =
+
+                new Quantity<>(
+                        0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<LengthUnit> l =
+
+                new Quantity<>(
+                        0,
+                        LengthUnit.FEET
+                );
+
+        assertFalse(
+                t.equals(l)
+        );
+    }
 }
