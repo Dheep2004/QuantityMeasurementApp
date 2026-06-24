@@ -1,11 +1,13 @@
-package org.example;
+package org.example.quantity;
+
+import org.example.units.IMeasurable;
 
 import java.util.Objects;
 import java.util.function.DoubleBinaryOperator;
 
 public class Quantity<U extends IMeasurable> {
 
-    enum ArithmeticOperation {
+    public enum ArithmeticOperation {
 
         ADD((a, b) -> a + b),
 

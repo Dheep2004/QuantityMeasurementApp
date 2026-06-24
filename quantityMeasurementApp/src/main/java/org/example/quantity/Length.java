@@ -1,6 +1,8 @@
-package org.example;
+package org.example.quantity;
 
 // import java.util.Objects;
+
+import org.example.units.LengthUnit;
 
 /**
  * Immutable value object representing a length.

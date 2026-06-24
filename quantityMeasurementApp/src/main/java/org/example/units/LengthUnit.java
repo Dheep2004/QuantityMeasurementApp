@@ -1,4 +1,4 @@
-package org.example;
+package org.example.units;
 
 /**
  * Enum representing supported length units

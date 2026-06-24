@@ -1,4 +1,13 @@
-package org.example;
+package org.example.app;
+
+import org.example.units.IMeasurable;
+import org.example.quantity.Length;
+import org.example.quantity.Quantity;
+import org.example.quantity.Weight;
+import org.example.units.LengthUnit;
+import org.example.units.TemperatureUnit;
+import org.example.units.VolumeUnit;
+import org.example.units.WeightUnit;
 
 public class QuantityMeasurementApp {
 
@@ -211,370 +220,147 @@ public class QuantityMeasurementApp {
     public static void main(String[] args) {
 
         System.out.println(
-                " UC3 Equality Demonstrations "
+                "\n===== QUANTITY MEASUREMENT UC15 =====\n"
         );
 
-        demonstrateLengthEquality(
-                1.0,
-                LengthUnit.FEET,
-                12.0,
-                LengthUnit.INCHES
-        );
+        // ---------------- LENGTH ----------------
 
-        demonstrateLengthEquality(
-                1.0,
-                LengthUnit.FEET,
-                1.0,
-                LengthUnit.FEET
-        );
-
-        System.out.println(
-                "\n UC4 Extended Unit Demonstrations "
-        );
-
-        demonstrateLengthEquality(
-                1.0,
-                LengthUnit.YARDS,
-                3.0,
-                LengthUnit.FEET
-        );
-
-        demonstrateLengthEquality(
-                1.0,
-                LengthUnit.YARDS,
-                36.0,
-                LengthUnit.INCHES
-        );
-
-        demonstrateLengthEquality(
-                2.54,
-                LengthUnit.CENTIMETERS,
-                1.0,
-                LengthUnit.INCHES
-        );
-
-        demonstrateLengthComparison(
-                1.0,
-                LengthUnit.FEET,
-                12.0,
-                LengthUnit.INCHES
-        );
-
-        System.out.println(
-                "\nUC5 Conversion Demonstrations"
-        );
-
-        demonstrateLengthConversion(
-                1.0,
-                LengthUnit.FEET,
-                LengthUnit.INCHES
-        );
-
-        demonstrateLengthConversion(
-                24.0,
-                LengthUnit.INCHES,
-                LengthUnit.FEET
-        );
-
-        demonstrateLengthConversion(
-                1.0,
-                LengthUnit.YARDS,
-                LengthUnit.INCHES
-        );
-
-        demonstrateLengthConversion(
-                72.0,
-                LengthUnit.INCHES,
-                LengthUnit.YARDS
-        );
-
-        demonstrateLengthConversion(
-                2.54,
-                LengthUnit.CENTIMETERS,
-                LengthUnit.INCHES
-        );
-
-        Length yard =
-                new Length(2.0, LengthUnit.YARDS);
-
-        demonstrateLengthConversion(
-                yard,
-                LengthUnit.INCHES
-        );
-
-        System.out.println(
-                "\nUC6 Addition Demonstration "
-        );
-
-        demonstrateLengthAddition(
-                1.0,
-                LengthUnit.FEET,
-                2.0,
-                LengthUnit.FEET,
-                LengthUnit.FEET
-        );
-
-        demonstrateLengthAddition(
-                1.0,
-                LengthUnit.FEET,
-                12.0,
-                LengthUnit.INCHES,
-                LengthUnit.FEET
-        );
-
-        demonstrateLengthAddition(
-                12.0,
-                LengthUnit.INCHES,
-                1.0,
-                LengthUnit.FEET,
-                LengthUnit.INCHES
-        );
-
-        demonstrateLengthAddition(
-                1.0,
-                LengthUnit.YARDS,
-                3.0,
-                LengthUnit.FEET,
-                LengthUnit.YARDS
-        );
-
-        demonstrateLengthAddition(
-                2.54,
-                LengthUnit.CENTIMETERS,
-                1.0,
-                LengthUnit.INCHES,
-                LengthUnit.CENTIMETERS
-        );
-
-        System.out.println(
-                "\n----------- ALL UC TESTS EXECUTED SUCCESSFULLY -----------"
-        );
-
-        // ---------------- UC7 ----------------
-
-        demonstrateLengthAddition(
-                1.0,
-                LengthUnit.FEET,
-                12.0,
-                LengthUnit.INCHES,
-                LengthUnit.FEET
-        );
-
-        demonstrateLengthAddition(
-                1.0,
-                LengthUnit.FEET,
-                12.0,
-                LengthUnit.INCHES,
-                LengthUnit.INCHES
-        );
-
-        demonstrateLengthAddition(
-                1.0,
-                LengthUnit.FEET,
-                12.0,
-                LengthUnit.INCHES,
-                LengthUnit.YARDS
-        );
-
-        demonstrateLengthAddition(
-                1.0,
-                LengthUnit.INCHES,
-                1.0,
-                LengthUnit.INCHES,
-                LengthUnit.CENTIMETERS
-        );
-
-        // ---------------- UC8 ----------------
-
-        demonstrateBaseUnitConversion();
-
-        // ---------------- UC9 ----------------
-
-        System.out.println(
-                "\n=========== UC9 WEIGHT DEMONSTRATION ==========="
-        );
-
-        demonstrateWeightEquality(
-                1.0,
-                WeightUnit.KILOGRAM,
-                1000.0,
-                WeightUnit.GRAM
-        );
-
-        demonstrateWeightConversion(
-                1.0,
-                WeightUnit.KILOGRAM,
-                WeightUnit.POUND
-        );
-
-        demonstrateWeightAddition(
-                1.0,
-                WeightUnit.KILOGRAM,
-                1000.0,
-                WeightUnit.GRAM,
-                WeightUnit.KILOGRAM
-        );
-
-        demonstrateWeightAddition(
-                1.0,
-                WeightUnit.POUND,
-                453.592,
-                WeightUnit.GRAM,
-                WeightUnit.POUND
-        );
-
-        // ---------------- UC10 ----------------
-
-        System.out.println(
-                "\n----------- UC10 Generic Quantity Demonstration -----------"
-        );
-
-        Quantity<LengthUnit> length1 =
-                new Quantity<>(1.0, LengthUnit.FEET);
-
-        Quantity<LengthUnit> length2 =
-                new Quantity<>(12.0, LengthUnit.INCHES);
-
-        demonstrateEquality(length1, length2);
-
-        demonstrateConversion(
-                length1,
-                LengthUnit.INCHES
-        );
-
-        demonstrateAddition(
-                length1,
-                length2,
-                LengthUnit.FEET
-        );
-
-        Quantity<WeightUnit> weight1 =
-                new Quantity<>(1.0, WeightUnit.KILOGRAM);
-
-        Quantity<WeightUnit> weight2 =
-                new Quantity<>(1000.0, WeightUnit.GRAM);
-
-        demonstrateEquality(weight1, weight2);
-
-        demonstrateConversion(
-                weight1,
-                WeightUnit.GRAM
-        );
-
-        demonstrateAddition(
-                weight1,
-                weight2,
-                WeightUnit.KILOGRAM
-        );
-
-        System.out.println(
-                "\n----------- UC10 Executed Successfully -----------"
-        );
-        // ---------------- UC11 VOLUME DEMONSTRATION ----------------
-
-        System.out.println(
-                "\n=========== UC11 VOLUME DEMONSTRATION ==========="
-        );
-
-// Equality
-
-        Quantity<VolumeUnit> volume1 =
+        Quantity<LengthUnit> feet =
                 new Quantity<>(
-                        1.0,
-                        VolumeUnit.LITRE
+                        1,
+                        LengthUnit.FEET
                 );
 
-        Quantity<VolumeUnit> volume2 =
+        Quantity<LengthUnit> inches =
                 new Quantity<>(
-                        1000.0,
-                        VolumeUnit.MILLILITRE
-                );
-
-        Quantity<VolumeUnit> volume3 =
-                new Quantity<>(
-                        1.0,
-                        VolumeUnit.GALLON
+                        12,
+                        LengthUnit.INCHES
                 );
 
         demonstrateEquality(
-                volume1,
-                volume2
+                feet,
+                inches
         );
 
-// Conversion
+        demonstrateConversion(
+                feet,
+                LengthUnit.INCHES
+        );
+
+        demonstrateAddition(
+                feet,
+                inches,
+                LengthUnit.FEET
+        );
+
+        // ---------------- WEIGHT ----------------
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(
+                        1,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(
+                        1000,
+                        WeightUnit.GRAM
+                );
+
+        demonstrateEquality(
+                kilogram,
+                gram
+        );
 
         demonstrateConversion(
-                volume1,
+                kilogram,
+                WeightUnit.GRAM
+        );
+
+        demonstrateAddition(
+                kilogram,
+                gram,
+                WeightUnit.KILOGRAM
+        );
+
+        // ---------------- VOLUME ----------------
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        1,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> milliLitre =
+                new Quantity<>(
+                        1000,
+                        VolumeUnit.MILLILITRE
+                );
+
+        demonstrateEquality(
+                litre,
+                milliLitre
+        );
+
+        demonstrateConversion(
+                litre,
                 VolumeUnit.MILLILITRE
         );
 
-        demonstrateConversion(
-                volume3,
+        demonstrateAddition(
+                litre,
+                milliLitre,
                 VolumeUnit.LITRE
         );
 
-// Addition
+        // ---------------- SUBTRACTION ----------------
 
-        demonstrateAddition(
-                volume1,
-                volume2,
-                VolumeUnit.LITRE
-        );
-
-        demonstrateAddition(
-                volume1,
-                volume3,
-                VolumeUnit.GALLON
-        );
-
-        System.out.println(
-                "\n=========== UC11 EXECUTED SUCCESSFULLY ==========="
-        );
         demonstrateSubtraction();
 
-        System.out.println("---------------------");
+        // ---------------- DIVISION ----------------
 
         demonstrateDivision();
-        System.out.println(
-                "\n=========== UC14 TEMPERATURE ==========="
-        );
 
-        Quantity<TemperatureUnit> t1 =
+        // ---------------- TEMPERATURE ----------------
+
+        Quantity<TemperatureUnit> celsius =
                 new Quantity<>(
-                        0.0,
+                        0,
                         TemperatureUnit.CELSIUS
                 );
 
-        Quantity<TemperatureUnit> t2 =
+        Quantity<TemperatureUnit> fahrenheit =
                 new Quantity<>(
-                        32.0,
+                        32,
                         TemperatureUnit.FAHRENHEIT
                 );
 
         demonstrateEquality(
-                t1,
-                t2
+                celsius,
+                fahrenheit
         );
 
         demonstrateConversion(
-                t1,
+                celsius,
                 TemperatureUnit.FAHRENHEIT
         );
 
-        Quantity<TemperatureUnit> t3 =
+        Quantity<TemperatureUnit> kelvin =
                 new Quantity<>(
                         273.15,
                         TemperatureUnit.KELVIN
                 );
 
         demonstrateEquality(
-                t1,
-                t3
+                celsius,
+                kelvin
         );
 
         try {
 
-            t1.add(t2);
+            celsius.add(
+                    fahrenheit
+            );
 
         }
 
@@ -586,6 +372,10 @@ public class QuantityMeasurementApp {
                     e.getMessage()
             );
         }
+
+        System.out.println(
+                "\n===== UC15 EXECUTED SUCCESSFULLY ====="
+        );
     }
 
     // ---------------- UC8 Base Unit Demonstration ----------------

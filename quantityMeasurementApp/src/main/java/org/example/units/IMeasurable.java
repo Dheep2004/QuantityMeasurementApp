@@ -10,7 +10,7 @@
 //
 //    String getUnitName();
 //}
-package org.example;
+package org.example.units;
 
 public interface IMeasurable {
 
