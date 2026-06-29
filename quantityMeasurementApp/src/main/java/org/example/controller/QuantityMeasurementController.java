@@ -1,10 +1,19 @@
 package org.example.controller;
 
 import org.example.entity.QuantityDTO;
+import org.example.entity.QuantityMeasurementEntity;
 import org.example.service.IQuantityMeasurementService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class
-QuantityMeasurementController {
+import java.util.List;
+
+public class QuantityMeasurementController {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(
+                    QuantityMeasurementController.class
+            );
 
     private final
     IQuantityMeasurementService
@@ -20,68 +29,226 @@ QuantityMeasurementController {
                 service;
     }
 
-    public boolean compare(
+    // =========================
+    // UC15 Methods
+    // =========================
 
-            QuantityDTO q1,
+    public boolean performCompare(
 
-            QuantityDTO q2
+            QuantityDTO left,
+
+            QuantityDTO right
     ) {
 
+        logger.info(
+                "Compare request received."
+        );
+
         return service.compare(
-                q1,
-                q2
+
+                left,
+
+                right
         );
     }
 
-    public QuantityDTO convert(
+    public QuantityDTO performConvert(
 
-            QuantityDTO q1,
+            QuantityDTO quantity,
 
             QuantityDTO target
     ) {
 
+        logger.info(
+                "Convert request received."
+        );
+
         return service.convert(
-                q1,
+
+                quantity,
+
                 target
         );
     }
 
-    public QuantityDTO add(
+    public QuantityDTO performAdd(
 
-            QuantityDTO q1,
+            QuantityDTO left,
 
-            QuantityDTO q2
+            QuantityDTO right
     ) {
+
+        logger.info(
+                "Add request received."
+        );
 
         return service.add(
-                q1,
-                q2
+
+                left,
+
+                right
         );
     }
 
-    public QuantityDTO subtract(
+    public QuantityDTO performAdd(
 
-            QuantityDTO q1,
+            QuantityDTO left,
 
-            QuantityDTO q2
+            QuantityDTO right,
+
+            QuantityDTO target
     ) {
+
+        logger.info(
+                "Add request with target unit received."
+        );
+
+        return service.add(
+
+                left,
+
+                right,
+
+                target
+        );
+    }
+
+    public QuantityDTO performSubtract(
+
+            QuantityDTO left,
+
+            QuantityDTO right
+    ) {
+
+        logger.info(
+                "Subtract request received."
+        );
 
         return service.subtract(
-                q1,
-                q2
+
+                left,
+
+                right
         );
     }
 
-    public double divide(
+    public QuantityDTO performSubtract(
 
-            QuantityDTO q1,
+            QuantityDTO left,
 
-            QuantityDTO q2
+            QuantityDTO right,
+
+            QuantityDTO target
     ) {
 
-        return service.divide(
-                q1,
-                q2
+        logger.info(
+                "Subtract request with target unit received."
         );
+
+        return service.subtract(
+
+                left,
+
+                right,
+
+                target
+        );
+    }
+
+    public double performDivide(
+
+            QuantityDTO left,
+
+            QuantityDTO right
+    ) {
+
+        logger.info(
+                "Divide request received."
+        );
+
+        return service.divide(
+
+                left,
+
+                right
+        );
+    }
+
+    // =========================
+    // UC16 Methods
+    // =========================
+
+    public List<QuantityMeasurementEntity>
+    getAllMeasurements() {
+
+        logger.info(
+                "Fetching all measurements."
+        );
+
+        return service.getAllMeasurements();
+    }
+
+    public List<QuantityMeasurementEntity>
+    getMeasurementsByOperation(
+
+            String operation
+    ) {
+
+        logger.info(
+                "Fetching measurements by operation: {}",
+                operation
+        );
+
+        return service
+                .getMeasurementsByOperation(
+                        operation
+                );
+    }
+
+    public List<QuantityMeasurementEntity>
+    getMeasurementsByType(
+
+            String type
+    ) {
+
+        logger.info(
+                "Fetching measurements by type: {}",
+                type
+        );
+
+        return service
+                .getMeasurementsByType(
+                        type
+                );
+    }
+
+    public void clearHistory() {
+
+        logger.info(
+                "Clearing measurement history."
+        );
+
+        service.clearHistory();
+    }
+
+    public int getHistoryCount() {
+
+        logger.info(
+                "Fetching measurement count."
+        );
+
+        return service.getHistoryCount();
+    }
+
+    public void displayResult(
+
+            Object result
+    ) {
+
+        logger.info(
+                "Displaying result."
+        );
+
+        System.out.println(result);
     }
 }
