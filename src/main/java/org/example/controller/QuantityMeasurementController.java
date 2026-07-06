@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 import org.example.dto.QuantityDTO;
@@ -24,6 +25,8 @@ import java.util.List;
 )
 
 
+
+@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/api/v1/quantities")
 public class QuantityMeasurementController {
