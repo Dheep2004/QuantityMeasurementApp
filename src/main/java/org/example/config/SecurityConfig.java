@@ -51,16 +51,30 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable())
+                )
+
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/pages/**",
+
                                 "/api/auth/**",
                                 "/oauth2/**",
                                 "/login/**",
+
                                 "/swagger-ui/**",
+                                "/swagger-ui.html",
                                 "/v3/api-docs/**",
+
                                 "/actuator/health"
                         ).permitAll()
 

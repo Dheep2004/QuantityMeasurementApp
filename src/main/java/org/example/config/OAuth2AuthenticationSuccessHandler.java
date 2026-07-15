@@ -36,18 +36,6 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
         String token = jwtService.generateToken(email, name, picture);
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
-        String jsonResponse = """
-                {
-                    "token": "%s",
-                    "email": "%s",
-                    "name": "%s",
-                    "picture": "%s"
-                }
-                """.formatted(token, email, name, picture);
-
-        response.getWriter().write(jsonResponse);
+        response.sendRedirect("/index.html?token=" + token);
     }
 }

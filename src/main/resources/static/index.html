@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantity Measurement</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <h1>Welcome To Quantity Measurement</h1>
+
+        <div class="profile" id="userProfile" style="display:none;">
+            <div class="avatar" id="userAvatar"></div>
+            <span class="user-name" id="userName"></span>
+            <button class="logout-btn" id="logoutBtn" title="Logout">&#9211;</button>
+        </div>
+    </header>
+
+    <div class="layout">
+
+        <!-- ================================ -->
+        <!-- Sidebar: Measurement Types + Actions -->
+        <!-- ================================ -->
+        <aside class="sidebar">
+
+            <section class="measurement-section">
+                <h3>CHOOSE TYPE</h3>
+
+                <div class="card-container">
+                    <div class="card active" id="lengthCard">
+                        <img src="images/length.png" alt="Length">
+                        <p>Length</p>
+                    </div>
+
+                    <div class="card" id="weightCard">
+                        <img src="images/weight.png" alt="Weight">
+                        <p>Weight</p>
+                    </div>
+
+                    <div class="card" id="temperatureCard">
+                        <img src="images/temperature.png" alt="Temperature">
+                        <p>Temperature</p>
+                    </div>
+
+                    <div class="card" id="volumeCard">
+                        <img src="images/volume.png" alt="Volume">
+                        <p>Volume</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="action-section">
+                <h3>CHOOSE ACTION</h3>
+
+                <div class="action-buttons">
+                    <button class="action-btn" id="comparisonBtn">Comparison</button>
+                    <button class="action-btn" id="conversionBtn">Conversion</button>
+                    <button class="action-btn active" id="arithmeticBtn">Arithmetic</button>
+                </div>
+            </section>
+
+        </aside>
+
+        <!-- ================================ -->
+        <!-- Main: iframe (calculator) + History -->
+        <!-- ================================ -->
+        <main class="main-content">
+
+            <section class="iframe-section">
+                <iframe id="contentFrame" src="pages/arithmetic.html" frameborder="0"></iframe>
+            </section>
+
+            <section class="history-section">
+                <div class="history-toggle" id="historyToggle">
+                    <h3>View History</h3>
+                    <span class="chevron" id="historyChevron">&#9650;</span>
+                </div>
+
+                <div class="history-body" id="historyBody">
+
+                    <div class="history-tabs" id="historyTabs">
+                        <button class="tab-btn active" data-op="ADD">Add</button>
+                        <button class="tab-btn" data-op="SUBTRACT">Subtract</button>
+                        <button class="tab-btn" data-op="DIVIDE">Divide</button>
+                        <button class="tab-btn" data-op="CONVERT">Convert</button>
+                        <button class="tab-btn" data-op="COMPARE">Compare</button>
+                        <button class="tab-btn" data-op="ERRORS">Errors</button>
+                    </div>
+
+                    <p class="history-count" id="historyCount">0 records</p>
+
+                    <table class="history-table">
+                        <thead>
+                        <tr>
+                            <th>OP</th>
+                            <th>THIS</th>
+                            <th>THAT</th>
+                            <th>RESULT</th>
+                        </tr>
+                        </thead>
+                        <tbody id="historyTableBody"></tbody>
+                    </table>
+
+                    <p class="history-empty" id="historyEmpty" style="display:none;">No records found.</p>
+
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
